@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: deepwalk",
+            "type": "python",
+            "request": "launch",
+            "program": "deepwalk/deepwalk",
+            "args": [
+                "--format", "edgelist",
+                "--input","data/rice/rice_subset.links",
+                "--max-memory-data-size", "1500000",
+                "--number-walks", "30",
+                "--representation-size", "128",
+                "--walk-length", "40",
+                "--window-size", "10",
+                "--workers", "30",
+                "--output", "data/rice.embeddings_wconstant50_128",
+                "--weighted", "random_walk_5_bndry_0.5_exp_5.0",
+                "--sensitive-attr-file", "data/rice/rice_subset.attr"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: fairwalk",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": [
+                "--format", "edgelist",
+                "--input","data/rice/rice_subset.links",
+                "--max-memory-data-size", "1500000",
+                "--number-walks", "30",
+                "--representation-size", "128",
+                "--walk-length", "40",
+                "--window-size", "10",
+                "--workers", "30",
+                "--output", "data/rice.embeddings_wconstant50_128",
+                "--weighted", "random_walk_5_bndry_0.5_exp_5.0",
+                "--sensitive-attr-file", "data/rice/rice_subset.attr"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ],
+    
+}

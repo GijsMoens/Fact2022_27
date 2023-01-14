@@ -20,6 +20,7 @@ from scipy.sparse import issparse
 import numpy as np
 import multiprocessing
 import pickle
+from tqdm import tqdm
 
 
 logger = logging.getLogger("deepwalk")
@@ -203,7 +204,7 @@ def build_deepwalk_corpus(G, num_paths, path_length, p_modified, alpha=0,
 
   nodes = list(G.nodes())
   
-  for cnt in range(num_paths):
+  for cnt in tqdm(range(num_paths)):
     rand.shuffle(nodes)
     for node in nodes:
       walks.append(G.random_walk(path_length, p_modified=p_modified, rand=rand, alpha=alpha, start=node))
@@ -493,7 +494,7 @@ def set_weights(G, method_):
     print('cnt_b=', cnt_b)
     print('cnt_rb=', cnt_rb)
     print('cnt_br=', cnt_br)
-    khkjhkhkjhkjhk
+
 
   if method_.startswith('expandar_'):
     _expand(G)
@@ -549,8 +550,7 @@ def set_weights(G, method_):
     exp_ = float(s_method[6])
     cfn = _colorfulness(G, l)
     G.edge_weights = dict()
-
-    for v in G:
+    for v in tqdm(G):
       nei_colors = np.unique([G.attr[u] for u in G[v]])
       if nei_colors.size == 0:
         continue
