@@ -1,4 +1,4 @@
-from sklearn.linear_model.logistic import LogisticRegression
+from sklearn.linear_model import LogisticRegression
 import numpy as np
 import pickle
 import os.path
@@ -41,20 +41,20 @@ if __name__ == '__main__':
     accuracy_keys = label_pairs + ['max_diff', 'var', 'total']
 
     accuracy = {k : [] for k in accuracy_keys}
-
-    for iter in [str(k) for k in range(1,6)]:
+    file_list=['.embeddings_wconstant50_128_range_5','.embeddings_wconstant50_128','.embeddings_wconstant50_128_2']
+    for iter in range(len(file_list)):
 
         print('iter: ', iter)
 
         # filename = 'sample_4000_connected_subset/sample_4000_connected_subset'
-        filename = 'rice_subset/rice_subset'
+        filename = 'data/rice/rice_subset'
         # emb_file = filename + '.embeddings_unweighted_d32_' + iter
         # emb_file = filename + '.embeddings_fairwalk_d32_' + iter
         # emb_file = filename + '.randomembedding_d32_' + iter
-        emb_file = filename + '.embeddings_random_walk_5_bndry_0.7_exp_2.0_d32_' + iter
+        emb_file = filename + file_list[iter]
         sens_attr_file = filename + '.attr'
-        train_links_file = filename + '_' + iter + '_trainlinks'
-        test_links_file = filename + '_' + iter + '_testlinks'
+        train_links_file = filename + '_trainlinks'
+        test_links_file = filename + '_testlinks'
 
         emb, dim = read_embeddings(emb_file)
         sens_attr = read_sensitive_attr(sens_attr_file, emb)

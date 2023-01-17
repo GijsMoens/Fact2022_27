@@ -407,27 +407,31 @@ def _expand(G):
 # def _compute_border_score(G, v, wl):
 #   return wl + 2 - np.mean([_compute_random_border_distance(G, v, wl) for _ in range(100)])
 
-def _ramdomwalk_colorfulness(G, v, l):
+def _ramdomwalk_colorfulness(G, v, l,use_cur_weights):
   v_color = G.attr[v]
   cur = v
   res = 0
   for i in range(l):
-    cur = np.random.choice(G[cur])
+    if use_cur_weights:
+      cur = np.random.choice(G[cur], p=G.edge_weights[cur])
+    else:
+      cur_old=cur
+      cur = np.random.choice(G[cur])
     if G.attr[cur] != v_color:
-      res += 1
+        res += 1
   return res / l
 
 # cnt_clrf = 0
 
-def  _node_colorfulness(G, v, l):
+def  _node_colorfulness(G, v, l,use_cur_weights):
   # global cnt_clrf
   # if np.mod(cnt_clrf, 100) == 0:
   #   print('cnt_clrf:', cnt_clrf)
   # cnt_clrf += 1
-  res = 0.001 + np.mean([_ramdomwalk_colorfulness(G, v, l) for _ in range(1000)])
+  res = 0.001 + np.mean([_ramdomwalk_colorfulness(G, v, l,use_cur_weights) for _ in range(1000)])
   return (v, res)
 
-def _colorfulness(G, l):
+def _colorfulness(G, l,use_cur_weights=False):
   # cfn = dict()
   # for i, v in enumerate(G):
   #   print(i, ':')
@@ -436,7 +440,7 @@ def _colorfulness(G, l):
 
   # pool = multiprocessing.Pool(multiprocessing.cpu_count())
   # map_results = pool.starmap(_node_colorfulness, [(G, v) for v in G])
-  map_results = [_node_colorfulness(G, v, l) for v in G]
+  map_results = [_node_colorfulness(G, v, l,use_cur_weights) for v in G]
   # pool.close()
   cfn = {k: v for k, v in map_results}
   # print(cfn)

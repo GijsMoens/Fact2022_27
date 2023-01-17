@@ -89,20 +89,21 @@ class fairInfMaximization(infMaxConfig):
 
         influenced, influenced_grouped = [], []
         seeds = []
-        for k in range(1, budget + 1):
-            print('--------', k)
-            S = ut.get_kmedoids_centers(em, k, v)
+        k=40
+        # for k in range(1, budget + 1):
+        print('--------', k)
+        S = ut.get_kmedoids_centers(em, k, v)
 
-            I, I_grouped = map_fair_IC((self.G, S))
-            influenced.append(I)
-            influenced_grouped.append(I_grouped)
+        I, I_grouped = map_fair_IC((self.G, S))
+        influenced.append(I)
+        influenced_grouped.append(I_grouped)
 
-            S_g = {c:[] for c in np.unique([self.G.nodes[v]['color'] for v in self.G.nodes])}
-            for n in S:
-                c = self.G.nodes[n]['color']
-                S_g[c].append(n)
+        S_g = {c:[] for c in np.unique([self.G.nodes[v]['color'] for v in self.G.nodes])}
+        for n in S:
+            c = self.G.nodes[n]['color']
+            S_g[c].append(n)
 
-            seeds.append(S_g)  # id's of the seeds so the influence can be recreated
+        seeds.append(S_g)  # id's of the seeds so the influence can be recreated
 
         ut.write_files(res_filename, influenced, influenced_grouped, seeds)
 
@@ -510,11 +511,11 @@ if __name__ == '__main__':
         
         d = 'd32'
         
-        for i in ['1','2','3','4','5']:
-            embfilename = 'fairwalknode2vec_embeddings/rice-node2vec_' + i
-            resfilename = 'fairwalknode2vec_results/rice-node2vec_' + i
-            print(i, ' ----')
-            fair_inf.test_kmedoids(embfilename, resfilename, budget=40)
+        # for i in ['1','2','3','4','5']:
+        embfilename = 'data/rice.embeddings_wconstant50_128_range_5'
+        resfilename = 'data/results_k40_new_2'
+        # print(i, ' ----')
+        fair_inf.test_kmedoids(embfilename, resfilename, budget=5)
 
     if False:
         fair_inf = fairInfMaximization(args=args)

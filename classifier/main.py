@@ -68,9 +68,9 @@ if __name__ == '__main__':
 
         # emb_file = 'rice_subset/rice_subset.embeddings_unweighted_d32_' + str(run_i)
         # emb_file = 'rice_subset/rice_subset.embeddings_random_walk_5_bndry_0.3_exp_1.0_d32_' + str(run_i)
-        emb_file = 'rice_subset/rice_subset.randomembedding_d32_' + str(run_i)
-        label_file = 'rice_subset/rice_raw.attr'
-        sens_attr_file = 'rice_subset/rice_sensitive_attr.txt'
+        emb_file = 'data/rice/rice_subset.embeddings_wconstant50_128'
+        label_file = 'data/rice/rice_subset.attr'
+        sens_attr_file = 'data/rice/rice_subset.attr'
 
         emb, dim = read_embeddings(emb_file)
         labels = read_labels(label_file, emb)
@@ -129,7 +129,7 @@ if __name__ == '__main__':
         y_test = y[n_train:]
         z_test = z[n_train:]
         g = np.mean(pairwise_distances(X))
-        clf = LabelPropagation(gamma = g).fit(X_train, y_train)
+        clf = LabelPropagation(gamma = g,max_iter=1000000).fit(X_train, y_train)
 
         y_pred = clf.predict(X_test)
 

@@ -79,7 +79,7 @@ class infMaxConfig(object):
 		elif self.rice_subset:
 
 			self.weight = 0.01
-			self.filename = 'facebook/rice_subset'
+			self.filename = 'data/rice/rice_subset'
 			self.weighted_graph_filename = 'weighted_graphs/rice_subset'
 
 		elif self.sample_1000:

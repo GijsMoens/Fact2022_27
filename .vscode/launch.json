@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: link_prediction",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+
+        {
             "name": "Python: deepwalk",
             "type": "python",
             "request": "launch",
@@ -12,13 +21,16 @@
             "args": [
                 "--format", "edgelist",
                 "--input","data/rice/rice_subset.links",
+                "--train-links-file","data/rice/rice_subset_trainlinks",
+                "--test-links-file","data/rice/rice_subset_testlinks",
+                "--test-links","0.2",
                 "--max-memory-data-size", "1500000",
                 "--number-walks", "30",
                 "--representation-size", "128",
                 "--walk-length", "40",
                 "--window-size", "10",
                 "--workers", "30",
-                "--output", "data/rice.embeddings_wconstant50_128",
+                "--output", "data/rice.embeddings_wconstant50_128_range_5",
                 "--weighted", "random_walk_5_bndry_0.5_exp_5.0",
                 "--sensitive-attr-file", "data/rice/rice_subset.attr"
             ],
@@ -30,21 +42,21 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": [
-                "--format", "edgelist",
-                "--input","data/rice/rice_subset.links",
-                "--max-memory-data-size", "1500000",
-                "--number-walks", "30",
-                "--representation-size", "128",
-                "--walk-length", "40",
-                "--window-size", "10",
-                "--workers", "30",
-                "--output", "data/rice.embeddings_wconstant50_128",
-                "--weighted", "random_walk_5_bndry_0.5_exp_5.0",
-                "--sensitive-attr-file", "data/rice/rice_subset.attr"
-            ],
+            // "args": [
+            //     "--nodes", "500",
+            //     "--Pred", "0.6",
+            //     "--Pblue", "0.25",
+            //     "--Prr", "0.025",
+            //     "--Pbb", "0.025",
+            //     "--Pgg", "0.025",
+            //     "--Prb", "0.001",
+            //     "--Prg", "0.001",
+            //     "--Pbg", "0.001",
+            //     "--Pact", "0.03"
+            // ],
             "console": "integratedTerminal",
             "justMyCode": true
+            // python fairinfMaximization.py --nodes 500 --Pred 0.6 --Pblue 0.25 --Prr 0.025 --Pbb 0.025 --Pgg 0.025 --Prb 0.001 --Prg 0.001 --Pbg 0.001  --Pact 0.03
         }
     ],
     
