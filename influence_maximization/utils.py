@@ -361,11 +361,11 @@ def get_twitter_data(filename,w = None, save = False	):
 		DG = nx.DiGraph()
 
 		for line in f:
-		    node_a, node_b = line.split()
-		    DG.add_nodes_from([node_a,node_b])
-		    DG.add_edges_from([(node_a, node_b)])
+			node_a, node_b = line.split()
+			DG.add_nodes_from([node_a,node_b])
+			DG.add_edges_from([(node_a, node_b)])
 
-		    DG[node_a][node_b]['weight'] = w 
+			DG[node_a][node_b]['weight'] = w 
 		
 		print("done with edges and weights ")
 
@@ -508,11 +508,13 @@ def make_weighted_graph(G, weights_file, type_algo):
 	if type_algo == 1:
 		for e in G.edges:
 			W_G.add_edge(e[0], e[1], weight = G.edges[e]['weight'] * w_dict[e[0]][e[1]])
+	
 	elif type_algo == 2:
 		mx = dict()
 		for u in G.nodes:
-                        if u in w_dict:
-                            mx[u] = np.max(list(w_dict[u].values()))
+			if u in w_dict:
+				mx[u] = np.max(list(w_dict[u].values()))
+
 		for e in G.edges:
 			W_G.add_edge(e[0], e[1], weight = G.edges[e]['weight'] * w_dict[e[0]][e[1]] / mx[e[0]])
 	else:
